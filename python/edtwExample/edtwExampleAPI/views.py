@@ -147,9 +147,9 @@ class EdtwViewSet(viewsets.ViewSet):
 
     @action(methods=['POST'], detail=False, name='Send Text Input')
     def send_text(self, request):
-        """API Endpoint to receive text input and return success response"""
-        text_input = request.data.get("text", "")
-        port_input = request.data.get("port", "")
+        """API to send text input as G-code over serial connection"""
+        text_input = request.data.get("text", "").strip()
+        port_input = request.data.get("port", "").strip()
 
         if not text_input:
             return Response(
@@ -160,10 +160,40 @@ class EdtwViewSet(viewsets.ViewSet):
         if not port_input:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"error": "No port input provided"}
+                data={"error": "No port selected"}
             )
 
-        return Response(
-            status=status.HTTP_200_OK,
-            data={"message": "Success", "received_text": text_input, "port": port_input}
-        )
+        # Connect to the specified port
+        if not self.connect_serial(port_input):
+            return Response(
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+                data={"error": f"Could not connect to port {port_input}"}
+            )
+
+        try:
+            if self.serial_connection and self.serial_connection.is_open:
+                # ✅ Send the input as G-code command
+                self.serial_connection.write((text_input + "\n").encode("utf-8"))
+
+                # ✅ Read the machine response
+                response = self.serial_connection.readline().decode("utf-8").strip()
+
+                return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        "message": "GCode sent successfully",
+                        "sent_gcode": text_input,
+                        "machine_response": response
+                    }
+                )
+            else:
+                return Response(
+                    status=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    data={"error": "Could not establish serial communication"}
+                )
+
+        except Exception as e:
+            return Response(
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                data={"error": f"Failed to send GCode: {str(e)}"}
+            )

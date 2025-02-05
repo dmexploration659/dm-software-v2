@@ -1,7 +1,4 @@
-# Electron + Django Example
-
-## Detail Guide
-[Electron + Django, desktop app integrate JavaScript & Python](https://ivanyu2021.hashnode.dev/electron-django-desktop-app-integrate-javascript-and-python)
+# DM software
 
 ## Installation & Run
 
