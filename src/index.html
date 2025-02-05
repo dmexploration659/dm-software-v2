@@ -5,11 +5,20 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-	<input id="input_text" type="text"></body>
-	<button id="btn_get_val_from_django" >Get Value From Django</button>
-	<h2>Output</h2>
-	<p id="p_output"></p>
+    <select id="ports_dropdown">
+      <option value="">Click to Load Ports</option>
+    </select>
+    <br />
+
+    <textarea id="input_value" placeholder="Enter input value..."></textarea>
+    <br />
+
+    <button id="send_button">Send</button>
+
+    <div id="response_display"></div>
+    <!-- Display API response here -->
+
+    <script src="index.js"></script>
+    <!-- Link to your JavaScript file -->
   </body>
 </html>

@@ -33,26 +33,30 @@ class EdtwViewSet(viewsets.ViewSet):
             self.connect_serial()
 
         try:
-            if self.serial_connection and self.serial_connection.is_open:
-                # Send the GCode command
-                self.serial_connection.write((input_str + "\n").encode("utf-8"))
-                # Read the response (optional)
-                response = self.serial_connection.readline().decode("utf-8").strip()
+            return Response(
+                status=status.HTTP_200_OK,
+                data={"error": "Input must be between 10 and 20 characters long."}
+            )
+            # if self.serial_connection and self.serial_connection.is_open:
+            #     # Send the GCode command
+            #     self.serial_connection.write((input_str + "\n").encode("utf-8"))
+            #     # Read the response (optional)
+            #     response = self.serial_connection.readline().decode("utf-8").strip()
                 
-                return Response(
-                    status=status.HTTP_200_OK,
-                    data={
-                        "input": input_str,
-                        "length": len(input_str),
-                        "message": "GCode sent successfully",
-                        "machine_response": response
-                    }
-                )
-            else:
-                return Response(
-                    status=status.HTTP_503_SERVICE_UNAVAILABLE,
-                    data={"error": "Could not connect to CNC machine"}
-                )
+            #     return Response(
+            #         status=status.HTTP_200_OK,
+            #         data={
+            #             "input": input_str,
+            #             "length": len(input_str),
+            #             "message": "GCode sent successfully",
+            #             "machine_response": response
+            #         }
+            #     )
+            # else:
+            #     return Response(
+            #         status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            #         data={"error": "Could not connect to CNC machine"}
+            #     )
                 
         except Exception as e:
             return Response(
