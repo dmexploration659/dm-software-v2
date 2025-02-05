@@ -1,16 +1,10 @@
 import axios from "axios";
 import "./index.css";
 
-const portsDropdown = document.getElementById(
-  "ports_dropdown"
-) as HTMLSelectElement;
-const inputField = document.getElementById(
-  "input_value"
-) as HTMLTextAreaElement;
+const portsDropdown = document.getElementById("ports_dropdown") as HTMLSelectElement;
+const inputField = document.getElementById("input_value") as HTMLTextAreaElement;
 const sendButton = document.getElementById("send_button") as HTMLButtonElement;
-const responseDisplay = document.getElementById(
-  "response_display"
-) as HTMLDivElement;
+const responseDisplay = document.getElementById("response_display") as HTMLDivElement;
 
 // Function to fetch and update the dropdown with available ports
 const fetchPorts = async () => {
@@ -18,9 +12,7 @@ const fetchPorts = async () => {
   const previousSelection = portsDropdown.value;
 
   try {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/edtwExampleAPI/get-available-ports/"
-    );
+    const res = await axios.get("http://127.0.0.1:8000/edtwExampleAPI/get-available-ports/");
     console.log("Fetched data:", res.data);
 
     const result = res.data;
@@ -59,22 +51,26 @@ const fetchPorts = async () => {
   }
 };
 
-// Function to send text from the textarea to the Django API and display the response
+// Function to send text from the textarea **and selected port** to the Django API
 const sendText = async () => {
   const textValue = inputField.value.trim();
+  const selectedPort = portsDropdown.value;
 
   if (!textValue) {
-    alert("Please enter some text before sending.");
+    alert("❌ Please enter some text before sending.");
+    return;
+  }
+
+  if (!selectedPort) {
+    alert("❌ Please select a port before sending.");
     return;
   }
 
   try {
-    const res = await axios.post(
-      "http://127.0.0.1:8000/edtwExampleAPI/send_text/",
-      {
-        text: textValue,
-      }
-    );
+    const res = await axios.post("http://127.0.0.1:8000/edtwExampleAPI/send_text/", {
+      text: textValue,
+      port: selectedPort,  // Include selected port in API request
+    });
 
     console.log("Response from server:", res.data);
 

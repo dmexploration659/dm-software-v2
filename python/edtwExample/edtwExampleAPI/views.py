@@ -149,6 +149,7 @@ class EdtwViewSet(viewsets.ViewSet):
     def send_text(self, request):
         """API Endpoint to receive text input and return success response"""
         text_input = request.data.get("text", "")
+        port_input = request.data.get("port", "")
 
         if not text_input:
             return Response(
@@ -156,7 +157,13 @@ class EdtwViewSet(viewsets.ViewSet):
                 data={"error": "No text input provided"}
             )
 
+        if not port_input:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"error": "No port input provided"}
+            )
+
         return Response(
             status=status.HTTP_200_OK,
-            data={"message": "Success", "received_text": text_input}
+            data={"message": "Success", "received_text": text_input, "port": port_input}
         )
