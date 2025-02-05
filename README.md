@@ -9,6 +9,7 @@ npm install
 
 Then:
 - go to the folder `python`
+- pip install virtualenv
 - create a virtualenv named `edtwExampleEnv`
 - Activate the virtualenv
 
