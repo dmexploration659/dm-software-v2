@@ -68,8 +68,11 @@ const sendText = async () => {
 
   try {
     const res = await axios.post("http://127.0.0.1:8000/edtwExampleAPI/send_text/", {
-      text: textValue,
-      port: selectedPort,  // Include selected port in API request
+      text: 'G18 ( Plane X,Z ) G21 ( Millimeter ) G90 ( Absolute ) G40 ( Cancel radius compensation ) G92 X0 Z0 ( Offset coordinate system ) ',
+      port: 'COM3',
+      // text: textValue,
+      // port: selectedPort,
+
     });
 
     console.log("Response from server:", res.data);
