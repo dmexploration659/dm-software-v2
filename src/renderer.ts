@@ -4,11 +4,11 @@ import "./index.css";
 const portsDropdown = document.getElementById("ports_dropdown") as HTMLSelectElement;
 const inputField = document.getElementById("input_value") as HTMLTextAreaElement;
 const sendButton = document.getElementById("send_button") as HTMLButtonElement;
+// const cancelButton = document.getElementById("cancel_button") as HTMLButtonElement;
 const responseDisplay = document.getElementById("response_display") as HTMLDivElement;
 
-// Function to fetch and update the dropdown with available ports
+// Function to fetch and update available ports
 const fetchPorts = async () => {
-  // Save the currently selected port before updating
   const previousSelection = portsDropdown.value;
 
   try {
@@ -18,32 +18,21 @@ const fetchPorts = async () => {
     const result = res.data;
     const ports = result.available_ports || [];
 
-    // Clear existing options
-    portsDropdown.innerHTML = ""; // Remove all existing options
-
-    // Add default "Select a Port" option
+    portsDropdown.innerHTML = ""; // Clear existing options
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "Select a Port";
     portsDropdown.appendChild(defaultOption);
 
-    if (ports.length > 0) {
-      ports.forEach((port: string) => {
-        const option = document.createElement("option");
-        option.value = port;
-        option.textContent = port;
-        portsDropdown.appendChild(option);
-      });
+    ports.forEach((port: string) => {
+      const option = document.createElement("option");
+      option.value = port;
+      option.textContent = port;
+      portsDropdown.appendChild(option);
+    });
 
-      // Restore previous selection if it still exists
-      if (ports.includes(previousSelection)) {
-        portsDropdown.value = previousSelection;
-      }
-    } else {
-      const noPortsOption = document.createElement("option");
-      noPortsOption.value = "";
-      noPortsOption.textContent = "No Ports Found";
-      portsDropdown.appendChild(noPortsOption);
+    if (ports.includes(previousSelection)) {
+      portsDropdown.value = previousSelection;
     }
   } catch (error) {
     console.error("Error fetching ports:", error);
@@ -51,7 +40,7 @@ const fetchPorts = async () => {
   }
 };
 
-// Function to send text from the textarea **and selected port** to the Django API
+// Function to send text (G-Code) to CNC machine
 const sendText = async () => {
   const textValue = inputField.value.trim();
   const selectedPort = portsDropdown.value;
@@ -66,18 +55,18 @@ const sendText = async () => {
     return;
   }
 
+  // Disable Send and Enable Cancel
+  sendButton.disabled = true;
+  // cancelButton.disabled = false;
+
   try {
     const res = await axios.post("http://127.0.0.1:8000/edtwExampleAPI/send_text/", {
-      text: 'G18 ( Plane X,Z ) G21 ( Millimeter ) G90 ( Absolute ) G40 ( Cancel radius compensation ) G92 X0 Z0 ( Offset coordinate system ) ',
-      port: 'COM3',
-      // text: textValue,
-      // port: selectedPort,
-
+      text: textValue,
+      port: selectedPort,
     });
 
     console.log("Response from server:", res.data);
 
-    // Display API response in the HTML
     responseDisplay.innerHTML = `
       <strong>Server Response:</strong>
       <pre>${JSON.stringify(res.data, null, 2)}</pre>
@@ -85,9 +74,27 @@ const sendText = async () => {
   } catch (error) {
     console.error("Error sending text:", error);
     responseDisplay.innerHTML = `<strong>Error:</strong> Failed to send message.`;
+  } finally {
+    sendButton.disabled = false;
+    // cancelButton.disabled = true;
+  }
+};
+
+// Function to release the port
+const cancelOperation = async () => {
+  try {
+    await axios.post("http://127.0.0.1:8000/edtwExampleAPI/release_port/");
+    alert("Port released successfully.");
+  } catch (error) {
+    console.error("Error releasing port:", error);
+    alert("❌ Failed to release the port.");
+  } finally {
+    sendButton.disabled = false;
+    // cancelButton.disabled = true;
   }
 };
 
 // Attach event listeners
 portsDropdown.addEventListener("click", fetchPorts);
 sendButton.addEventListener("click", sendText);
+// cancelButton.addEventListener("click", cancelOperation);
