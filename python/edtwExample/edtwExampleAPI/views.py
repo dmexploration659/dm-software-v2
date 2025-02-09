@@ -89,3 +89,39 @@ class EdtwViewSet(viewsets.ViewSet):
         self.serial_connection = None
         self.port_in_use = None
         return Response({"message": "Port released successfully"}, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['POST'], name="Generate G-Code")
+    def generate_gcode(self, request):
+        """Generates G-code from user-drawn shapes"""
+        shape = request.data.get("shape", "").lower()
+        feedrate = request.data.get("feedrate", 1000)
+        gcode = ["G21", "G90"]  # Set units to mm, absolute positioning
+
+        if shape == "rectangle":
+            start_x = request.data.get("start_x", 0)
+            start_y = request.data.get("start_y", 0)
+            width = request.data.get("width", 50)
+            height = request.data.get("height", 30)
+
+            gcode.append(f"G0 X{start_x} Y{start_y}")  # Move to start
+            gcode.append(f"G1 X{start_x + width} Y{start_y} F{feedrate}")  # Top edge
+            gcode.append(f"G1 X{start_x + width} Y{start_y + height} F{feedrate}")  # Right edge
+            gcode.append(f"G1 X{start_x} Y{start_y + height} F{feedrate}")  # Bottom edge
+            gcode.append(f"G1 X{start_x} Y{start_y} F{feedrate}")  # Close rectangle
+
+        elif shape == "circle":
+            center_x = request.data.get("center_x", 40)
+            center_y = request.data.get("center_y", 40)
+            radius = request.data.get("radius", 25)
+
+            gcode.append(f"G0 X{center_x + radius} Y{center_y}")  # Move to start
+            gcode.append(f"G2 X{center_x + radius} Y{center_y} I-{radius} J0 F{feedrate}")  # Draw circle
+
+        else:
+            return Response(
+                {"error": "Invalid shape type"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        gcode.append("M30")  # End program
+        return Response({"gcode": "\n".join(gcode)}, status=status.HTTP_200_OK)
