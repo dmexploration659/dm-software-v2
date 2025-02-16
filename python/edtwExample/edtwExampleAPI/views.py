@@ -6,6 +6,19 @@ import serial
 import serial.tools.list_ports
 import time
 
+# CNC Response Code Mapping
+ERROR_MESSAGES = {
+    "error:1": "G-code motion command without active G-code.",
+    "error:2": "Invalid G-code command.",
+    "error:3": "Attempt to move without homing cycle.",
+    "ALARM:1": "Hard limit triggered. Check end stops.",
+    "ALARM:2": "Soft limit reached. Adjust work area.",
+    "ok": "Command executed successfully.",
+    "error:5": "Jogging command cannot be executed because the machine is not in a jogging state.",
+    "error:9": "G-code command received but ignored due to a modal state conflict.",
+    # Add more error mappings if needed...
+}
+
 class EdtwViewSet(viewsets.ViewSet):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -37,6 +50,10 @@ class EdtwViewSet(viewsets.ViewSet):
         except serial.SerialException:
             return False
 
+    def handle_response(self, response):
+        """Processes CNC responses, mapping them to human-readable messages."""
+        return ERROR_MESSAGES.get(response, f"Unknown response: {response}")
+
     @action(methods=['POST'], detail=False, name='Send Text Input')
     def send_text(self, request):
         """API to send text input as G-code over serial connection"""
@@ -59,12 +76,16 @@ class EdtwViewSet(viewsets.ViewSet):
             if self.serial_connection and self.serial_connection.is_open:
                 self.serial_connection.write((text_input + "\n").encode("utf-8"))
                 time.sleep(0.2)
+                
+                # Read CNC response
                 response = self.serial_connection.readline().decode("utf-8").strip()
+                human_readable_message = self.handle_response(response)
 
                 return Response({
                     "message": "GCode sent successfully",
                     "sent_gcode": text_input,
-                    "machine_response": response
+                    "cnc_response_code": response,
+                    "cnc_response_message": human_readable_message
                 }, status=status.HTTP_200_OK)
 
             else:
@@ -89,7 +110,7 @@ class EdtwViewSet(viewsets.ViewSet):
         self.serial_connection = None
         self.port_in_use = None
         return Response({"message": "Port released successfully"}, status=status.HTTP_200_OK)
-    
+
     @action(detail=False, methods=['POST'], name="Generate G-Code")
     def generate_gcode(self, request):
         """Generates G-code from user-drawn shapes"""
