@@ -62,107 +62,107 @@ class EdtwViewSet(viewsets.ViewSet):
     def map_error_code(self, code):
         """Maps error codes to messages"""
         error_messages = {
-            "0": "OK: Command executed successfully.",
-            "1": "Error: G-code command unsupported.",
-            "2": "Error: Bad number format in G-code.",
-            "3": "Error: Invalid statement in G-code.",
-            "4": "Error: Negative value not allowed.",
-            "5": "Error: Homing cycle failure.",
-            "6": "Error: Minimum step pulse time too short.",
-            "7": "Error: EEPROM read failure.",
-            "8": "Error: Invalid or unsupported `$` command.",
-            "9": "Error: G-code motion command not allowed in current state.",
-            "10": "Error: Soft limit triggered. Machine stopped.",
-            "11": "Error: Hard limit triggered. Machine halted.",
-            "12": "Error: Spindle control command failed.",
-            "13": "Error: G-code command requires homing but homing is not enabled.",
-            "14": "Error: Arc radius calculation error.",
-            "15": "Error: Machine position out of bounds.",
-            "16": "Error: Tool change command not supported.",
-            "17": "Error: Safety door open. Machine paused.",
-            "18": "Error: Invalid feed rate specified.",
-            "19": "Error: Invalid spindle speed.",
-            "20": "Error: Unsupported motion mode (e.g., G2/G3 without I/J).",
-            "21": "Error: Homing cycle required before executing this command.",
-            "22": "Error: Invalid coolant command.",
-            "23": "Error: Invalid axis selection in G-code.",
-            "24": "Error: Machine is in alarm state. Reset required.",
-            "25": "Error: Feed hold active. Resume required.",
-            "26": "Error: Unhandled G-code command.",
-            "27": "Error: Tool offset command unsupported.",
-            "28": "Error: Machine axis not calibrated.",
-            "29": "Error: Work coordinate system out of range.",
-            "30": "Error: Invalid probe command.",
-            "31": "Error: Invalid jog command.",
-            "32": "Error: Invalid cutter compensation command.",
-            "33": "Error: Probe triggered unexpectedly.",
-            "34": "Error: Probe did not trigger.",
-            "35": "Error: Laser mode active but incompatible G-code used.",
-            "36": "Error: Invalid M-code command.",
-            "37": "Error: G-code line too long.",
-            "38": "Error: Machine is in motion. Stop required before executing command.",
-            "39": "Error: Invalid dwell time.",
-            "40": "Error: Invalid canned cycle command.",
-            "41": "Error: Machine emergency stop activated.",
-            "42": "Error: Spindle overload detected.",
-            "43": "Error: Stepper driver failure detected.",
-            "44": "Error: Serial communication buffer overflow.",
-            "45": "Error: G-code comment not properly closed.",
-            "46": "Error: Axis limit switch triggered.",
-            "47": "Error: Invalid arc mode command.",
-            "48": "Error: Machine requires re-homing.",
-            "49": "Error: G-code motion command blocked by safety settings.",
-            "50": "Error: CNC machine firmware update required.",
-            "51": "Error: Tool length offset incorrect.",
-            "52": "Error: Soft stop triggered.",
-            "53": "Error: Overheat protection activated.",
-            "54": "Error: Invalid spindle direction command.",
-            "55": "Error: Invalid work offset command.",
-            "56": "Error: Motion planner buffer overflow.",
-            "57": "Error: Stepper motor stalled.",
-            "58": "Error: Machine unable to hold position.",
-            "59": "Error: Invalid rotary axis command.",
-            "60": "Error: Invalid tool change position.",
-            "61": "Error: Invalid coolant system command.",
-            "62": "Error: Invalid backlash compensation command.",
-            "63": "Error: Machine control lock enabled.",
-            "64": "Error: Automatic tool changer not available.",
-            "65": "Error: Spindle not enabled before cutting command.",
-            "66": "Error: Axis synchronization failure.",
-            "67": "Error: CNC motion planner buffer full.",
-            "68": "Error: Invalid dwell command.",
-            "69": "Error: Machine startup initialization failed.",
-            "70": "Error: Invalid soft limit settings.",
-            "71": "Error: Machine requires firmware reset.",
-            "72": "Error: Machine bed not leveled.",
-            "73": "Error: End stop trigger detected during motion.",
-            "74": "Error: Unrecognized or corrupted command received.",
-            "75": "Error: Machine timeout. Check CNC response time.",
-            "76": "Error: Buffer overflow detected.",
-            "77": "Error: Machine in an undefined state.",
-            "78": "Error: Invalid or missing checksum in G-code.",
-            "79": "Error: Safety interlock enabled. Operation blocked.",
-            "80": "Error: Servo motor error detected.",
-            "81": "Error: Positioning error beyond tolerance.",
-            "82": "Error: Unrecognized CNC configuration setting.",
-            "83": "Error: Invalid homing settings.",
-            "84": "Error: Machine motion exceeded programmed limits.",
-            "85": "Error: Spindle load exceeded safe threshold.",
-            "86": "Error: Invalid machine mode transition.",
-            "87": "Error: Tool table entry not found.",
-            "88": "Error: Fixture offset invalid.",
-            "89": "Error: CNC controller restart required.",
-            "90": "Error: Spindle encoder feedback error.",
-            "91": "Error: Limit switch debounce time too short.",
-            "92": "Error: Stepper driver power loss detected.",
-            "93": "Error: Tool radius compensation conflict.",
-            "94": "Error: Feed rate override out of range.",
-            "95": "Error: Axis drive fault detected.",
-            "96": "Error: MDI (Manual Data Input) command invalid.",
-            "97": "Error: Machine safety check failed.",
-            "98": "Error: Invalid cycle start command.",
-            "99": "Error: CNC watchdog timer triggered.",
-            "100": "Error: Unhandled CNC internal error.",
+            "error:0": "OK: Command executed successfully.",
+            "error:1": "error:: G-code command unsupported.",
+            "error:2": "error:: Bad number format in G-code.",
+            "error:3": "error:: Invalid statement in G-code.",
+            "error:4": "error:: Negative value not allowed.",
+            "error:5": "error:: Homing cycle failure.",
+            "error:6": "error:: Minimum step pulse time too short.",
+            "error:7": "error:: EEPROM read failure.",
+            "error:8": "error:: Invalid or unsupported `$` command.",
+            "error:9": "error:: G-code motion command not allowed in current state.",
+            "error:10": "error:: Soft limit triggered. Machine stopped.",
+            "error:11": "error:: Hard limit triggered. Machine halted.",
+            "error:12": "error:: Spindle control command failed.",
+            "error:13": "error:: G-code command requires homing but homing is not enabled.",
+            "error:14": "error:: Arc radius calculation error.",
+            "error:15": "error:: Machine position out of bounds.",
+            "error:16": "error:: Tool change command not supported.",
+            "error:17": "error:: Safety door open. Machine paused.",
+            "error:18": "error:: Invalid feed rate specified.",
+            "error:19": "error:: Invalid spindle speed.",
+            "error:20": "error:: Unsupported motion mode (e.g., G2/G3 without I/J).",
+            "error:21": "error:: Homing cycle required before executing this command.",
+            "error:22": "error:: Invalid coolant command.",
+            "error:23": "error:: Invalid axis selection in G-code.",
+            "error:24": "error:: Machine is in alarm state. Reset required.",
+            "error:25": "error:: Feed hold active. Resume required.",
+            "error:26": "error:: Unhandled G-code command.",
+            "error:27": "error:: Tool offset command unsupported.",
+            "error:28": "error:: Machine axis not calibrated.",
+            "error:29": "error:: Work coordinate system out of range.",
+            "error:30": "error:: Invalid probe command.",
+            "error:31": "error:: Invalid jog command.",
+            "error:32": "error:: Invalid cutter compensation command.",
+            "error:33": "error:: Probe triggered unexpectedly.",
+            "error:34": "error:: Probe did not trigger.",
+            "error:35": "error:: Laser mode active but incompatible G-code used.",
+            "error:36": "error:: Invalid M-code command.",
+            "error:37": "error:: G-code line too long.",
+            "error:38": "error:: Machine is in motion. Stop required before executing command.",
+            "error:39": "error:: Invalid dwell time.",
+            "error:40": "error:: Invalid canned cycle command.",
+            "error:41": "error:: Machine emergency stop activated.",
+            "error:42": "error:: Spindle overload detected.",
+            "error:43": "error:: Stepper driver failure detected.",
+            "error:44": "error:: Serial communication buffer overflow.",
+            "error:45": "error:: G-code comment not properly closed.",
+            "error:46": "error:: Axis limit switch triggered.",
+            "error:47": "error:: Invalid arc mode command.",
+            "error:48": "error:: Machine requires re-homing.",
+            "error:49": "error:: G-code motion command blocked by safety settings.",
+            "error:50": "error:: CNC machine firmware update required.",
+            "error:51": "error:: Tool length offset incorrect.",
+            "error:52": "error:: Soft stop triggered.",
+            "error:53": "error:: Overheat protection activated.",
+            "error:54": "error:: Invalid spindle direction command.",
+            "error:55": "error:: Invalid work offset command.",
+            "error:56": "error:: Motion planner buffer overflow.",
+            "error:57": "error:: Stepper motor stalled.",
+            "error:58": "error:: Machine unable to hold position.",
+            "error:59": "error:: Invalid rotary axis command.",
+            "error:60": "error:: Invalid tool change position.",
+            "error:61": "error:: Invalid coolant system command.",
+            "error:62": "error:: Invalid backlash compensation command.",
+            "error:63": "error:: Machine control lock enabled.",
+            "error:64": "error:: Automatic tool changer not available.",
+            "error:65": "error:: Spindle not enabled before cutting command.",
+            "error:66": "error:: Axis synchronization failure.",
+            "error:67": "error:: CNC motion planner buffer full.",
+            "error:68": "error:: Invalid dwell command.",
+            "error:69": "error:: Machine startup initialization failed.",
+            "error:70": "error:: Invalid soft limit settings.",
+            "error:71": "error:: Machine requires firmware reset.",
+            "error:72": "error:: Machine bed not leveled.",
+            "error:73": "error:: End stop trigger detected during motion.",
+            "error:74": "error:: Unrecognized or corrupted command received.",
+            "error:75": "error:: Machine timeout. Check CNC response time.",
+            "error:76": "error:: Buffer overflow detected.",
+            "error:77": "error:: Machine in an undefined state.",
+            "error:78": "error:: Invalid or missing checksum in G-code.",
+            "error:79": "error:: Safety interlock enabled. Operation blocked.",
+            "error:80": "error:: Servo motor error detected.",
+            "error:81": "error:: Positioning error beyond tolerance.",
+            "error:82": "error:: Unrecognized CNC configuration setting.",
+            "error:83": "error:: Invalid homing settings.",
+            "error:84": "error:: Machine motion exceeded programmed limits.",
+            "error:85": "error:: Spindle load exceeded safe threshold.",
+            "error:86": "error:: Invalid machine mode transition.",
+            "error:87": "error:: Tool table entry not found.",
+            "error:88": "error:: Fixture offset invalid.",
+            "error:89": "error:: CNC controller restart required.",
+            "error:90": "error:: Spindle encoder feedback error.",
+            "error:91": "error:: Limit switch debounce time too short.",
+            "error:92": "error:: Stepper driver power loss detected.",
+            "error:93": "error:: Tool radius compensation conflict.",
+            "error:94": "error:: Feed rate override out of range.",
+            "error:95": "error:: Axis drive fault detected.",
+            "error:96": "error:: MDI (Manual Data Input) command invalid.",
+            "error:97": "error:: Machine safety check failed.",
+            "error:98": "error:: Invalid cycle start command.",
+            "error:99": "error:: CNC watchdog timer triggered.",
+            "error:100": "error:: Unhandled CNC internal error.",
         }
 
         
@@ -175,16 +175,16 @@ class EdtwViewSet(viewsets.ViewSet):
         port_input = request.data.get("port", "").strip()
 
         if not text_input:
-            return Response({"error": "No text input provided"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error:": "No text input provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         if not port_input:
-            return Response({"error": "No port selected"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error:": "No port selected"}, status=status.HTTP_400_BAD_REQUEST)
 
         if self.port_in_use and self.port_in_use != port_input:
-            return Response({"error": f"Port {self.port_in_use} is already in use. Please wait or cancel."}, status=status.HTTP_409_CONFLICT)
+            return Response({"error:": f"Port {self.port_in_use} is already in use. Please wait or cancel."}, status=status.HTTP_409_CONFLICT)
 
         if not self.connect_serial(port_input):
-            return Response({"error": f"Could not connect to port {port_input}"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response({"error:": f"Could not connect to port {port_input}"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         try:
             if self.serial_connection and self.serial_connection.is_open:
@@ -203,13 +203,13 @@ class EdtwViewSet(viewsets.ViewSet):
                 }, status=status.HTTP_200_OK)
 
             else:
-                return Response({"error": "Could not establish serial communication"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+                return Response({"error:": "Could not establish serial communication"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         except serial.SerialException as e:
-            return Response({"error": f"Serial Exception: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error:": f"Serial Exception: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except Exception as e:
-            return Response({"error": f"Failed to send GCode: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error:": f"Failed to send GCode: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @action(detail=False, methods=['POST'], name="Cancel Operation")
     def cancel_operation(self, request):
@@ -217,7 +217,7 @@ class EdtwViewSet(viewsets.ViewSet):
         if self.release_port():
             return Response({"message": "Port released successfully"}, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "Failed to release port"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error:": "Failed to release port"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def release_port(self):
         """Releases the currently in-use serial port"""
