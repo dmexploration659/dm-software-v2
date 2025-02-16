@@ -30,7 +30,7 @@ class EdtwViewSet(viewsets.ViewSet):
     def connect_serial(self, port, baudrate=115200):
         """Connects to a selected serial port"""
         if self.serial_connection and self.serial_connection.is_open:
-            return True  # Already connected
+            return True
 
         try:
             self.serial_connection = serial.Serial(port, baudrate=baudrate, timeout=1)
