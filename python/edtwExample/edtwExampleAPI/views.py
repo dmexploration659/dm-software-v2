@@ -73,7 +73,7 @@ class EdtwViewSet(viewsets.ViewSet):
             return Response({"error": f"Could not connect to port {port_input}"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         try:
-            if self.serial_connection and self.serial_connection.is_open:
+            while self.serial_connection and self.serial_connection.is_open:
                 self.serial_connection.write((text_input + "\n").encode("utf-8"))
                 time.sleep(0.2)
                 
